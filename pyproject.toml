@@ -1,0 +1,25 @@
+[project]
+name = "my-blog-agent"
+version = "0.1.0"
+description = "Multi-agent blog writer using ADK + OpenAI GPT-4o mini"
+readme = "README.md"
+requires-python = ">=3.12"
+
+dependencies = [
+  "google-adk",
+  "python-dotenv",
+
+  # OpenAI support
+  "openai",
+
+  # Optional wrapper (recommended)
+  "litellm",
+
+  # RAG (we'll use later)
+  "llama-index",
+
+  # optional
+  "tqdm"
+]
+
+[tool.uv]
