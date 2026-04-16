@@ -12,8 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import uuid
 import glob
 import os
+
+from langchain_community.tools import DuckDuckGoSearchRun
 
 
 def save_blog_post_to_file(blog_post: str, filename: str) -> dict:
@@ -37,3 +40,17 @@ def analyze_codebase(directory: str) -> dict:
                 with open(file, encoding="latin-1") as f:
                     codebase_context += f.read()
     return {"codebase_context": codebase_context}
+
+
+def search(query: str) -> str:
+    """Search the web using DuckDuckGo.
+
+    Wrapped to avoid ADK type hint issues.
+    """
+    search_tool = DuckDuckGoSearchRun()
+    return search_tool.run(query)
+
+
+def search_internal_data(query: str) -> str:
+    """Search internal knowledge base (placeholder)."""
+    return f"Internal search result for: {query}"

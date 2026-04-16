@@ -12,9 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import uuid  # noqa: F401
+
 from google.adk.agents import Agent, LoopAgent
 #from google.adk.tools import google_search
-from ..search_tool import search
+from ..tools import search
 
 from ..agent_utils import suppress_output_callback
 from ..config import config, get_model_wrapper
