@@ -17,6 +17,7 @@ import glob
 import os
 
 from langchain_community.tools import DuckDuckGoSearchRun
+from .rag import search_internal_data
 
 
 def save_blog_post_to_file(blog_post: str, filename: str) -> dict:
@@ -51,6 +52,6 @@ def search(query: str) -> str:
     return search_tool.run(query)
 
 
-def search_internal_data(query: str) -> str:
-    """Search internal knowledge base (placeholder)."""
-    return f"Internal search result for: {query}"
+# def search_internal_data(query: str) -> str:
+#     """Search internal knowledge base (placeholder)."""
+#     return f"Internal search result for: {query}"
