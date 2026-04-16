@@ -8,18 +8,17 @@ requires-python = ">=3.12"
 dependencies = [
   "google-adk",
   "python-dotenv",
-
   # OpenAI support
   "openai",
-
   # Optional wrapper (recommended)
   "litellm",
-
   # RAG (we'll use later)
   "llama-index",
-
   # optional
-  "tqdm"
+  "tqdm",
+  "langchain-community>=0.4.1",
+  "duckduckgo-search>=8.1.1",
+  "ddgs>=9.13.1",
 ]
 
 [tool.uv]

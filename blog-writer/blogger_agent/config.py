@@ -14,33 +14,47 @@
 
 import os
 from dataclasses import dataclass
+from dotenv import load_dotenv
 
-import google.auth
+# Load environment variables from .env
+env_path = os.path.join(os.path.dirname(__file__), ".env")
+load_dotenv(dotenv_path=env_path)
 
-# To use AI Studio credentials:
-# 1. Create a .env file in the /app directory with:
-#    GOOGLE_GENAI_USE_VERTEXAI=FALSE
-#    GOOGLE_API_KEY=PASTE_YOUR_ACTUAL_API_KEY_HERE
-# 2. This will override the default Vertex AI configuration
-_, project_id = google.auth.default()
-os.environ.setdefault("GOOGLE_CLOUD_PROJECT", project_id)
-os.environ["GOOGLE_CLOUD_LOCATION"] = "global"
-os.environ.setdefault("GOOGLE_GENAI_USE_VERTEXAI", "True")
+
+def get_model_wrapper(model_name: str):
+    """
+    Wrap OpenAI model using LiteLLM so ADK can understand it
+    """
+    from google.adk.models.lite_llm import LiteLlm
+    return LiteLlm(model_name)
 
 
 @dataclass
 class ResearchConfiguration:
-    """Configuration for research-related models and parameters.
+    """Configuration for models and agent behaviour."""
 
-    Attributes:
-        critic_model (str): Model for evaluation tasks.
-        worker_model (str): Model for working/generation tasks.
-        max_search_iterations (int): Maximum search iterations allowed.
-    """
+    # Models (from .env)
+    worker_model: str = os.getenv("WORKER_MODEL", "gpt-4o-mini")
+    critic_model: str = os.getenv("CRITIC_MODEL", "gpt-4o-mini")
 
-    critic_model: str = "gemini-2.5-pro"
-    worker_model: str = "gemini-2.5-flash"
+    # OpenAI API Key
+    openai_api_key: str = os.getenv("OPENAI_API_KEY")
+
+    # Optional: for RAG later
+    embedding_model: str = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
+
+    # Agent behaviour
     max_search_iterations: int = 5
 
 
+# Create global config object
 config = ResearchConfiguration()
+
+
+# Helper function (optional but useful)
+def get_model(model_name: str) -> str:
+    """
+    Returns model name (used by agents).
+    Can be extended later if needed.
+    """
+    return model_name

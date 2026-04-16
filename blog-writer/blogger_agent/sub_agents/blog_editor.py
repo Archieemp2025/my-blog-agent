@@ -15,10 +15,10 @@
 from google.adk.agents import Agent
 
 from ..agent_utils import suppress_output_callback
-from ..config import config
+from ..config import config, get_model_wrapper
 
 blog_editor = Agent(
-    model=config.critic_model,
+    model=get_model_wrapper(config.critic_model),
     name="blog_editor",
     description="Edits a technical blog post based on user feedback.",
     instruction="""

@@ -14,10 +14,10 @@
 
 from google.adk.agents import Agent
 
-from ..config import config
+from ..config import config, get_model_wrapper
 
 social_media_writer = Agent(
-    model=config.critic_model,
+    model=get_model_wrapper(config.critic_model),
     name="social_media_writer",
     description="Writes social media posts to promote the blog post.",
     instruction="""

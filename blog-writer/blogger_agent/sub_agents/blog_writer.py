@@ -13,14 +13,15 @@
 # limitations under the License.
 
 from google.adk.agents import Agent, LoopAgent
-from google.adk.tools import google_search
+#from google.adk.tools import google_search
+from ..search_tool import search
 
 from ..agent_utils import suppress_output_callback
-from ..config import config
+from ..config import config, get_model_wrapper
 from ..validation_checkers import BlogPostValidationChecker
 
 blog_writer = Agent(
-    model=config.critic_model,
+    model=get_model_wrapper(config.critic_model),
     name="blog_writer",
     description="Writes a technical blog post.",
     instruction="""
@@ -34,7 +35,7 @@ blog_writer = Agent(
     - The codebase context will be available in the `codebase_context` state key.
     The final output must be a complete blog post in Markdown format. Do not wrap the output in a code block.
     """,
-    tools=[google_search],
+    tools=[search],
     output_key="blog_post",
     after_agent_callback=suppress_output_callback,
 )

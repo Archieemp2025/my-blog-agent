@@ -17,7 +17,7 @@ import datetime
 from google.adk.agents import Agent
 from google.adk.tools import FunctionTool
 
-from .config import config
+from .config import config, get_model_wrapper
 from .sub_agents import (
     blog_editor,
     robust_blog_planner,
@@ -30,7 +30,7 @@ from .tools import analyze_codebase, save_blog_post_to_file
 
 interactive_blogger_agent = Agent(
     name="interactive_blogger_agent",
-    model=config.worker_model,
+    model=get_model_wrapper(config.worker_model),
     description="The primary technical blogging assistant. It collaborates with the user to create a blog post.",
     instruction=f"""
     You are a technical blogging assistant. Your primary function is to help users create technical blog posts.

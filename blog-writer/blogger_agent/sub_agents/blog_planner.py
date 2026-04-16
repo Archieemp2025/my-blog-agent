@@ -13,14 +13,15 @@
 # limitations under the License.
 
 from google.adk.agents import Agent, LoopAgent
-from google.adk.tools import google_search
+# from google.adk.tools import google_search
+from ..search_tool import search
 
 from ..agent_utils import suppress_output_callback
-from ..config import config
+from ..config import config, get_model_wrapper
 from ..validation_checkers import OutlineValidationChecker
 
 blog_planner = Agent(
-    model=config.worker_model,
+    model=get_model_wrapper(config.worker_model), 
     name="blog_planner",
     description="Generates a blog post outline.",
     instruction="""
@@ -33,7 +34,7 @@ blog_planner = Agent(
     Use Google Search to find relevant information and examples to support your writing.
     Your final output should be a blog post outline in Markdown format.
     """,
-    tools=[google_search],
+    tools=[search],
     output_key="blog_outline",
     after_agent_callback=suppress_output_callback,
 )
